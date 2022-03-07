@@ -38,9 +38,17 @@
     }
 
     updateDisplay() {
-      if (this.currentValue) {
+      if (this.currentValue) {    
         this.display.value = this.currentValue;
+        return;
       }
+
+      if(this.prevValue) {
+        this.display.value = this.prevValue;
+        return;
+      }
+
+      this.display.value = '0';
     }
 
     resetOperation() {
@@ -50,10 +58,61 @@
         operator.classList.remove('active');
       });
     }
+
+    compute() {
+      let result;
+      const prev = parseFloat(this.prevValue);
+      const curr = parseFloat(this.currentValue);
+      if (Number.isNaN(prev)|| Number.isNaN(curr)) {
+        return;
+      }
+
+      switch(this.operation)
+      {
+        case "+":
+          result = prev + curr;
+          break;
+        case "-":
+          result = prev - curr;
+          break;
+        case "*":
+          result = prev * curr;
+          break;
+        case "÷":
+          result = prev / curr;
+          break;
+        default:
+          return;
+      }
+      this.currentValue = result.toString();
+      this.prevValue = '';
+      this.resetOperation();
+    }
+
+    clear() {
+      // 현재 값이 입력됐을 때의 처리
+      if (this.currentValue) {
+        this.currentValue = '';
+        return;
+      }
+
+      // 연산자가 클릭됐을 때의 처리
+      if (this.operation) {
+        this.resetOperation();
+        this.currentValue = this.prevValue;
+        return;
+      }
+
+      if(this.prevValue) {
+        this.prevValue = '';
+      }
+    }
   }
 
   const numberButtons = getAll('.cell_button.number');
   const operationButtons = getAll('.cell_button.operation');
+  const computeButton = get('.cell_button.compute');
+  const clearButton = get('.cell_button.clear');
   const display = get('.display');
 
   const calculator = new Caculator(display);
@@ -71,4 +130,14 @@
       calculator.updateDisplay();
     });
   });
+
+  computeButton.addEventListener('click', ()=>{
+    calculator.compute();
+    calculator.updateDisplay();
+  });
+
+  clearButton.addEventListener('click', ()=>{
+    calculator.clear();
+    calculator.updateDisplay();
+  })
 })()
