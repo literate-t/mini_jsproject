@@ -5,6 +5,8 @@
     return document.querySelector(target);
   };
 
+  const $todos = get(".todos");
+
   const createTodoElement = (item) => {
     const { id, content } = item;
     const $todoItem = document.createElement("div");
@@ -39,6 +41,25 @@
     return $todoItem;
   };
 
-  const init = () => {};
+  const renderAllTodos = (todos) => {
+    $todos.innerHTML = ""; // init
+    todos.forEach((item) => {
+      const el = createTodoElement(item);
+      $todos.appendChild(el);
+    });
+  };
+
+  const getTodos = () => {
+    fetch("http://localhost:3000/todos")
+      .then((res) => res.json())
+      .then((res) => renderAllTodos(res))
+      .catch((error) => console.log(error));
+  };
+
+  const init = () => {
+    window.addEventListener("DOMContentLoaded", (e) => {
+      getTodos();
+    });
+  };
   init();
 })();
