@@ -11,8 +11,9 @@
   const $todoInput = get(".todo-input");
 
   const createTodoElement = (item) => {
-    const { id, content } = item;
+    const { id, content, completed } = item;
     const $todoItem = document.createElement("div");
+    const isChecked = completed ? "checked" : "";
     $todoItem.classList.add("item");
     $todoItem.dataset.id = id;
     $todoItem.innerHTML = `
@@ -20,9 +21,10 @@
               <input
                 type="checkbox"
                 class='todo-checkbox' 
+                ${isChecked}
               />
               <label>${content}</label>
-              <input type="text" value="${content}" />
+              <input type="text" value="${content}"/>
             </div>
             <div class="item-buttons content-buttons">
               <button class="todo-edit-button">
@@ -87,12 +89,33 @@
       });
   };
 
+  const toggleTodo = (e) => {
+    //console.log(e.target.className);
+    if ("todo-checkbox" !== e.target.className) {
+      return;
+    }
+
+    const $item = e.target.closest(".item");
+    // 특정 row를 식별하기 위해
+    const id = $item.dataset.id;
+    const completed = e.target.checked;
+
+    fetch(`${API_URL}/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ completed }),
+    }).catch((error) => console.log(error));
+  };
+
   const init = () => {
     window.addEventListener("DOMContentLoaded", (e) => {
       getTodos();
     });
 
     $form.addEventListener("submit", addTodo);
+    $todos.addEventListener("click", toggleTodo);
   };
   init();
 })();
