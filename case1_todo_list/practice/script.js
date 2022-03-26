@@ -109,6 +109,83 @@
     }).catch((error) => console.log(error));
   };
 
+  const changeEditMode = (e) => {
+    const { className } = e.target;
+    const $item = e.target.closest(".item");
+    const $label = $item.querySelector("label");
+    const $editInput = $item.querySelector("input[type='text']");
+    const $contentButtons = $item.querySelector(".content-buttons");
+    const $editButtons = $item.querySelector(".edit-buttons");
+    const value = $editInput.value;
+
+    if (className === "todo-edit-button") {
+      $label.style.display = "none";
+      $editInput.style.display = "block";
+      $editInput.focus();
+      $editInput.value = "";
+      $editInput.value = value;
+      // $editInput.setSelectionRange(
+      //   $editInput.value.length,
+      //   $editInput.value.length
+      // );
+      $contentButtons.style.display = "none";
+      $editButtons.style.display = "block";
+    } else if (className == "todo-edit-cancel-button") {
+      $label.style.display = "block";
+      $editInput.value = $label.innerText;
+      $editInput.style.display = "none";
+      $contentButtons.style.display = "block";
+      $editButtons.style.display = "none";
+    }
+  };
+
+  const editTodo = (e) => {
+    const { className } = e.target;
+    if (className !== "todo-edit-confirm-button") {
+      return;
+    }
+
+    const $item = e.target.closest(".item");
+    const id = $item.dataset.id;
+    const $editInput = $item.querySelector("input[type='text']");
+    const $label = $item.querySelector("label");
+    const $contentButtons = $item.querySelector(".content-buttons");
+    const $editButtons = $item.querySelector(".edit-buttons");
+    const content = $editInput.value;
+
+    fetch(`${API_URL}/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          $label.innerText = content;
+          $editInput.style.display = "none";
+          $label.style.display = "block";
+          $contentButtons.style.display = "block";
+          $editButtons.style.display = "none";
+        }
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const removeTodo = (e) => {
+    const { className } = e.target;
+    if ("todo-remove-button" !== className) {
+      return;
+    }
+
+    const $item = e.target.closest(".item");
+    const id = $item.dataset.id;
+
+    fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    })
+      .then(getTodos)
+      .catch((error) => console.error(error));
+  };
+
   const init = () => {
     window.addEventListener("DOMContentLoaded", (e) => {
       getTodos();
@@ -116,6 +193,9 @@
 
     $form.addEventListener("submit", addTodo);
     $todos.addEventListener("click", toggleTodo);
+    $todos.addEventListener("click", changeEditMode);
+    $todos.addEventListener("click", editTodo);
+    $todos.addEventListener("click", removeTodo);
   };
   init();
 })();

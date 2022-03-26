@@ -1,29 +1,9 @@
 {
   "todos": [
     {
-      "content": "테스트 1",
-      "completed": true,
-      "id": 1
-    },
-    {
-      "content": "테스트 2",
-      "completed": false,
-      "id": 2
-    },
-    {
-      "content": "테스트 3",
-      "completed": false,
-      "id": 3
-    },
-    {
       "content": "test 4",
-      "completed": false,
+      "completed": true,
       "id": 4
-    },
-    {
-      "content": "test 5",
-      "completed": false,
-      "id": 5
     },
     {
       "content": "test 6",
