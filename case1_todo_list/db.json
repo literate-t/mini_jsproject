@@ -2,12 +2,17 @@
   "todos": [
     {
       "content": "test 4",
-      "completed": true,
+      "completed": false,
       "id": 4
     },
     {
-      "content": "test 6",
-      "completed": false,
+      "content": "test1",
+      "completed": true,
+      "id": 5
+    },
+    {
+      "content": "test2",
+      "completed": true,
       "id": 6
     }
   ]

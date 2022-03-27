@@ -23,8 +23,9 @@ button > i {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  width: 800px;
-  height: 500px;
+  width: 600px;
+  height: 530px;
+  padding: 24px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -38,32 +39,28 @@ h2 {
 
 .header {
   width: 100%;
-  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
   padding: 24px;
   box-shadow: 0 4px 21px 6px #ececec9e;
 }
 
-.button-wrapper {
-  display: flex;
-  align-items: center;
-  height: 42px;
-}
-
-.todo-form {
+.todo_form {
   display: flex;
   justify-content: space-between;
   margin-top: 12px;
 }
 
-.todo-input {
-  width: 500px;
+.todo_input {
+  width: 100%;
   font-size: 16px;
   padding: 12px 14px;
   background-color: #f6f6f6;
   border-radius: 8px;
 }
 
-.todo-submit-button {
+.todo_submit_button {
   background-color: #9dc0e8;
   color: #fff;
   width: 80px;
@@ -72,17 +69,9 @@ h2 {
   border-radius: 8px;
 }
 
-.button-wrapper > .todo-remove-button {
-  width: 80px;
-  height: 100%;
-  margin-left: 12px;
-  border-radius: 8px;
-  padding: 0;
-}
-
 .todos {
-  box-sizing: border-box;
-  padding: 0 24px;
+  margin-top: 106px;
+  margin-bottom: 25px;
   overflow: auto;
 }
 
@@ -101,7 +90,7 @@ h2 {
   align-items: center;
 }
 
-.content > input[type="checkbox"] {
+.content > input[type='checkbox'] {
   transform: scale(1.5);
   margin-left: 10px;
 }
@@ -113,7 +102,7 @@ h2 {
   width: 100%;
 }
 
-.content > input[type="text"] {
+.content > input[type='text'] {
   font-size: 16px;
   margin-left: 20px;
   padding-top: 4px;
@@ -121,11 +110,11 @@ h2 {
   width: 100%;
 }
 
-.item-buttons {
+.item_buttons {
   width: 118px;
 }
 
-.item-buttons > button {
+.item_buttons > button {
   width: 42px;
   height: 42px;
   color: #555555;
@@ -133,19 +122,36 @@ h2 {
   border-radius: 8px;
 }
 
-.item-buttons > button:first-child {
+.item_buttons > button:first-child {
   background-color: #bad4f5;
   margin-right: 8px;
 }
 
-.todo-checkbox {
+.todo_checkbox {
   appearance: auto !important;
 }
 
-.item input[type="text"] {
+.item input[type='text'] {
   display: none;
 }
 
-.edit-buttons {
+.edit_buttons {
   display: none;
+}
+
+.pagination {
+  position: absolute;
+  left: 50%;
+  bottom: 25px;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.pagination button {
+  width: 50px;
+  height: 30px;
+  color: #555555;
+  margin: 0 2px;
+  font-weight: 700;
+  border-radius: 6px;
 }
