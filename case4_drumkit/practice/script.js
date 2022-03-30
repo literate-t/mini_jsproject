@@ -27,11 +27,45 @@
   const getAudioElement = (index) => {
     const audio = document.createElement("audio");
     audio.dataset.key = drumSounds[index].key;
+    audio.src = soundsRoot + drumSounds[index].sound;
+    return audio;
+  };
+
+  const playSound = (keyCode) => {
+    const $audio = get(`audio[data-key="${keyCode}"]`);
+    const $key = get(`div[data-key="${keyCode}"]`);
+
+    if ($audio && $key) {
+      $key.classList.add("playing");
+      $audio.currentTime = 0;
+      $audio.play();
+    }
+  };
+
+  const onKeyDown = (e) => {
+    playSound(e.keyCode);
+  };
+
+  const onMouseDown = (e) => {
+    const key = e.target.getAttribute("data-key");
+    playSound(key);
+  };
+
+  const onTransitionEnd = (e) => {
+    if ("transform" === e.propertyName) {
+      e.target.classList.remove("playing");
+    }
   };
 
   const init = () => {
+    window.addEventListener("keydown", onKeyDown);
+
     keys.forEach((key, index) => {
       const audio = getAudioElement(index);
+      key.appendChild(audio);
+      key.dataset.key = drumSounds[index].key;
+      key.addEventListener("click", onMouseDown);
+      key.addEventListener("transitionend", onTransitionEnd);
     });
   };
 
