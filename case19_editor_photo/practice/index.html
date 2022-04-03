@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Photo Editor</title>
+    <link rel="stylesheet" href="../../utils/reset.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main>
+      <h1>Photo Editor</h1>
+      <section>
+        <div class="editor-wrap">
+          <div class="drag-area">
+            Drag and drop a image
+            <input type="file" />
+          </div>
+          <div class="canvas-wrap">
+            <canvas class="canvas"></canvas>
+            <img src="./assets/sample.jpg" alt="sample" class="file-image" />
+          </div>
+        </div>
+        <div class="image-wrap"></div>
+        <div class="button-wrap">
+          <button class="btn-flip">플립</button>
+          <button class="btn-sepia">세피아</button>
+          <button class="btn-gray">그레이</button>
+          <button class="btn-save">저장</button>
+        </div>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
